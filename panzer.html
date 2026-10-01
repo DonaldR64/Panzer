@@ -14,7 +14,7 @@
             <label for="attr_type">Type:</label>
             <select name="attr_type">
                 <option value="" selected disabled hidden>Choose here</option>
-                <option value="Armoured Vehicle">Armoured Vehicle</option>
+                <option value="Tank">Tank</option>
                 <option value="System Token">System Token</option>
             </select>
             <br>            
@@ -115,7 +115,7 @@
 
                 <section class="move f-center">
                     <h3>Cross-Country: <span name="attr_move"></span><span name="attr_movetype"></span></h3>
-                    <h3>Path/Road: <span name="attr_pathmove">/<span name="attr_roadmove"></span></h3>
+                    <h3>Path/Road: <span name="attr_movedisplay"></span></h3>
                 </section>
 
 
@@ -216,4 +216,26 @@
     on("sheet:opened", function() {
         setAttrs({sheetTab:"basic"});
     });
+
+
+    on("sheet:opened", function() {
+        getAttrs(["pathmove","roadmove"], function(values) {
+
+            let pm = parseInt(values.pathmove);
+            let rm = parseInt(values.roadmove);
+            let md = pm;
+            if (pm !== rm) {
+                md += "/" + rm;
+            }
+
+            setAttrs({
+                "movedisplay": md,
+                
+            }); 
+        });
+    });
+
+
+
+
 </script>
