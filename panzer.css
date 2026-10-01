@@ -167,7 +167,7 @@ section {
 .topline {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     text-align: center;
     align-items: center;
@@ -176,7 +176,7 @@ section {
 .midline {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     text-align: center;
     align-items: center;
@@ -185,7 +185,7 @@ section {
 .botline {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     text-align: center;
     align-items: center;
