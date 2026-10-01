@@ -25,54 +25,29 @@ const Main = (() => {
 
     const DefineHexInfo = () => {
         HexSize = (70 * pageInfo.scale)/M.f0;
-        if (pageInfo.type === "hex") {
-            HexInfo = {
-                size: HexSize,
-                pixelStart: {
-                    x: 35 * pageInfo.scale,
-                    y: HexSize,
-                },
-                width: 70  * pageInfo.scale,
-                height: pageInfo.scale*HexSize,
-                xSpacing: 70 * pageInfo.scale,
-                ySpacing: 3/2 * HexSize,
-                directions: {
-                    "Northeast": new Cube(1,-1,0),
-                    "East": new Cube(1,0,-1),
-                    "Southeast": new Cube(0,1,-1),
-                    "Southwest": new Cube(-1,1,0),
-                    "West": new Cube(-1,0,1),
-                    "Northwest": new Cube(0,-1,1),
-                },
-                halfToggleX: 35 * pageInfo.scale,
-                halfToggleY: 0,
-            }
-            DIRECTIONS = ["Northeast","East","Southeast","Southwest","West","Northwest"];
-        } else if (pageInfo.type === "hexr") {
-            //Hex H or Flat Topped
-            HexInfo = {
-                size: HexSize,
-                pixelStart: {
-                    x: HexSize,
-                    y: 35 * pageInfo.scale,
-                },
-                width: pageInfo.scale*HexSize,
-                height: 70  * pageInfo.scale,
-                xSpacing: 3/2 * HexSize,
-                ySpacing: 70 * pageInfo.scale,
-                directions: {
-                    "North": new Cube(0, -1, 1),
-                    "Northeast": new Cube(1, -1, 0),
-                    "Southeast": new Cube(1,0,-1),
-                    "South": new Cube(0,1,-1),
-                    "Southwest": new Cube(-1,1,0),
-                    "Northwest": new Cube(-1,0,1),
-                },
-                halfToggleX: 0,
-                halfToggleY: 35 * pageInfo.scale,
-            }
-            DIRECTIONS = ["North","Northeast","Southeast","South","Southwest","Northwest"];
+        //Hex H or Flat Topped
+        HexInfo = {
+            size: HexSize,
+            pixelStart: {
+                x: HexSize + pageInfo.offsetX,
+                y: (35 * pageInfo.scale) + pageInfo.offsetY,
+            },
+            width: pageInfo.scale*HexSize,
+            height: 70  * pageInfo.scale,
+            xSpacing: 3/2 * HexSize,
+            ySpacing: 70 * pageInfo.scale,
+            directions: {
+                "North": new Cube(0, -1, 1),
+                "Northeast": new Cube(1, -1, 0),
+                "Southeast": new Cube(1,0,-1),
+                "South": new Cube(0,1,-1),
+                "Southwest": new Cube(-1,1,0),
+                "Northwest": new Cube(-1,0,1),
+            },
+            halfToggleX: 0,
+            halfToggleY: 35 * pageInfo.scale,
         }
+        DIRECTIONS = ["North","Northeast","Southeast","South","Southwest","Northwest"];
     }
 
     let outputCard = {title: "",subtitle: "",side: "",body: [],buttons: [],};
@@ -1159,12 +1134,14 @@ const Main = (() => {
     const LoadPage = () => {
         //build Page Info and flesh out Hex Info
         pageInfo.page = getObj('page', Campaign().get("playerpageid"));
+log(pageInfo.page)
         pageInfo.name = pageInfo.page.get("name");
         pageInfo.scale = pageInfo.page.get("snapping_increment");
         pageInfo.width = pageInfo.page.get("width") * 70;
         pageInfo.height = pageInfo.page.get("height") * 70;
         pageInfo.type = pageInfo.page.get("grid_type");
-
+        pageInfo.offsetX = pageInfo.page.get("grid_offset_x");
+        pageInfo.offsetY = pageInfo.page.get("grid_offset_y");
 
     }
 
@@ -1174,29 +1151,17 @@ const Main = (() => {
 
         let startX = HexInfo.pixelStart.x;
         let startY = HexInfo.pixelStart.y;
-        let halfToggleX = HexInfo.halfToggleX;
         let halfToggleY = HexInfo.halfToggleY;
-        if (pageInfo.type === "hex") {
-            for (let j = startY; j <= pageInfo.height;j+=HexInfo.ySpacing){
-                for (let i = startX;i<= pageInfo.width;i+=HexInfo.xSpacing) {
-                    let point = new Point(i,j);     
-                    let hex = new Hex(point);
-                }
-                startX += halfToggleX;
-                halfToggleX = -halfToggleX;
+        for (let i=startX;i<=pageInfo.width;i+=HexInfo.xSpacing) {
+            for (let j=startY;j<=pageInfo.height;j+=HexInfo.ySpacing) {
+                let point = new Point(i,j);     
+                let hex = new Hex(point);
             }
-        } else if (pageInfo.type === "hexr") {
-            for (let i=startX;i<=pageInfo.width;i+=HexInfo.xSpacing) {
-                for (let j=startY;j<=pageInfo.height;j+=HexInfo.ySpacing) {
-                    let point = new Point(i,j);     
-                    let hex = new Hex(point);
-                }
-                startY += halfToggleY;
-                halfToggleY = -halfToggleY;
-            }
+            startY += halfToggleY;
+            halfToggleY = -halfToggleY;
         }
-        AddTerrain();    
-        AddTokens();
+        //AddTerrain();    
+        //AddTokens();
         DefineMap();
         let elapsed = Date.now()-startTime;
         log("Hex Map Built in " + elapsed/1000 + " seconds");
