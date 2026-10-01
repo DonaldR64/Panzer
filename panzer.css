@@ -42,16 +42,16 @@ main {
     width: 800px;
     height: 450px;
     grid-gap: 4px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 
 
 
-    grid-template-areas:"header   armour    move"
-                        "common   common    common"
-                        "common   common    common"
-                        "weapon   weapon    weapon"
-                        "weapon   weapon    weapon";
+    grid-template-areas:"common   common    common header"
+                        "common   common    common armour"
+                        "common   common    common move"
+                        "weapon   weapon    weapon weapon"
+                        "weapon   weapon    weapon weapon";
   }
 
 
