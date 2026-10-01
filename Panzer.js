@@ -1134,7 +1134,6 @@ const Main = (() => {
     const LoadPage = () => {
         //build Page Info and flesh out Hex Info
         pageInfo.page = getObj('page', Campaign().get("playerpageid"));
-log(pageInfo.page)
         pageInfo.name = pageInfo.page.get("name");
         pageInfo.scale = pageInfo.page.get("snapping_increment");
         pageInfo.width = pageInfo.page.get("width") * 70;
