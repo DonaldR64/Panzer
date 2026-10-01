@@ -16,7 +16,6 @@
                 <option value="" selected disabled hidden>Choose here</option>
                 <option value="Armoured Vehicle">Armoured Vehicle</option>
                 <option value="System Token">System Token</option>
-
             </select>
             <br>            
             <label for="attr_nation">Nation:</label>
@@ -46,7 +45,7 @@
                 <option value="" selected disabled hidden>Choose here</option>
                 <option value="Turret">Turret</option>
                 <option value="No Turret">No Turret</option>
-                <option value="360">360°</option>
+                <option value="360°">360°</option>
             </select>
         </div>
 
@@ -108,20 +107,23 @@
         <div class="attributes">
             <main>
                 <section class="header f-center">
-                    <h1><span name="attr_name1"></span></h1>
-                    <h2><span name="attr_name2"></span></h2>
+                    <h1><span name="attr_character_name"></span></h1>
+                    <h3><span name="attr_nation"></span> <span name="attr_type"></span></h3>
                 </section>
 
-                <section class="info f-center">
-                    <h3><span name="attr_quality"></span> <span name="attr_type"></span></h3>
-                    <h3><span name="attr_notes"></span></h3>
-                </section>
-
-                <input type="hidden" name="attr_armourdisplay" class="armour-status" value="Off">
                 <section class="armour f-center">
-                    <h2>Front Armour: <span name="attr_armourF"></span></h2>
-                    <h2>Side Armour: <span name="attr_armourS"></span></h2>
+                    <h3>Front Armour: <span name="attr_armourF"></span></h3>
+                    <h3>Rear Armour: <span name="attr_armourR"></span></h3>
+                    <h3>Size: <span name="attr_size"></span></h3>
+                    <h3><span name="attr_turret"></span></h3>
                 </section>
+
+                <section class="move f-center">
+                    <h3>Cross-Country: <span name="attr_move"></span><span name="attr_movetype"></span></h3>
+                    <h3>Path/Road: <span name="attr_pathmove">/<span name="attr_roadmove"></span></h3>
+                </section>
+
+
 
                 <section class="common">
                     <div>
@@ -130,37 +132,69 @@
                 </section>
 
                 <section class="weapon">    
-                    <div class="weaponinfo">
-                        <span>Name</span>    
-                        <span>Eff.Range</span>    
-                        <span>ROF</span>    
-                        <span>AT</span>    
-                        <span>Notes</span>
-                    </div>        
-                    <input type="hidden" name="attr_weapon1equipped" class="weapon1-status" value="Off">
-                    <div class="weapon1">
-                        <h4><span name="attr_weapon1name"></span></h4>
-                        <h4><span name="attr_weapon1range"></span></h4>
-                        <h4><span name="attr_weapon1rof"></span></h4>
-                        <h4><span name="attr_weapon1at"></span></h4>
-                        <h4><span name="attr_weapon1notes"></span></h4>
+                    <div class="weaponname">
+                        <h3><span name="attr_weaponname"></span></h3>
                     </div>
-                    <input type="hidden" name="attr_weapon2equipped" class="weapon2-status" value="Off">
-                    <div class="weapon2">
-                        <h4><span name="attr_weapon2name"></span></h4>
-                        <h4><span name="attr_weapon2range"></span></h4>
-                        <h4><span name="attr_weapon2rof"></span></h4>
-                        <h4><span name="attr_weapon2at"></span></h4>
-                        <h4><span name="attr_weapon2notes"></span></h4>
+                    <div class="type1">
+                        <h4><span name="attr_type1"></span></h4>
                     </div>
-                    <input type="hidden" name="attr_weapon3equipped" class="weapon3-status" value="Off">
-                    <div class="weapon3">
-                        <h4><span name="attr_weapon3name"></span></h4>
-                        <h4><span name="attr_weapon3range"></span></h4>
-                        <h4><span name="attr_weapon3rof"></span></h4>
-                        <h4><span name="attr_weapon3at"></span></h4>
-                        <h4><span name="attr_weapon3notes"></span></h4>
+                    <div class="type1r">
+                        <h4>R</h4>
                     </div>
+                    <div class="type1p">
+                        <h4>P</h4>
+                    </div>
+                    <div class="type1pt">
+                        <h4>P</h4>
+                    </div>
+                    <div class="type1st">
+                        <h4>S</h4>
+                    </div>                    
+                    <div class="type1mt">
+                        <h4>M</h4>
+                    </div>                    
+                    <div class="type1lt">
+                        <h4>L</h4>
+                    </div>                    
+                    <div class="type1et">
+                        <h4>E</h4>
+                    </div>
+                    <div class="type1rp">
+                        <h4><span name="attr_type1rangeP"></span></h4>
+                    </div>
+                    <div class="type1rs">
+                        <h4><span name="attr_type1rangeS"></span></h4>
+                    </div>
+                    <div class="type1rm">
+                        <h4><span name="attr_type1rangeM"></span></h4>
+                    </div>
+                    <div class="type1rl">
+                        <h4><span name="attr_type1rangeL"></span></h4>
+                    </div>
+                    <div class="type1re">
+                        <h4><span name="attr_type1rangeE"></span></h4>
+                    </div>
+                    <div class="type1pp">
+                        <h4><span name="attr_type1penP"></span></h4>
+                    </div>
+                    <div class="type1ps">
+                        <h4><span name="attr_type1penS"></span></h4>
+                    </div>
+                    <div class="type1pm">
+                        <h4><span name="attr_type1penM"></span></h4>
+                    </div>
+                    <div class="type1pl">
+                        <h4><span name="attr_type1penL"></span></h4>
+                    </div>
+                    <div class="type1pe">
+                        <h4><span name="attr_type1penE"></span></h4>
+                    </div>
+
+
+
+
+
+
                 </section>
             </main>
         </div>
@@ -175,7 +209,7 @@
 
 
 <script type="text/worker">
-    const buttonlist = ["input","display"];
+    const buttonlist = ["input","basic","advanced"];
     buttonlist.forEach(button => {
         on(`clicked:${button}`, function() {
             setAttrs({
@@ -185,34 +219,6 @@
     });
 
     on("sheet:opened", function() {
-        setAttrs({sheetTab:"display"});
-    });
-
-
-    on("change:armour change:type change:speed sheet:opened", function() {
-        getAttrs(["character_name","quality","armourF","type"], function(values) {
-
-            let farmour = values.armourF || "";
-
-            let name = values.character_name || '';
-            name = name.split(",");
-            let name1 = name[0].trim();
-            let name2 = name[1].trim() || "";
-            
-            let quality = values.quality || 'Regular';
-
-            let type = values.type;
-            let armourdisplay = "Off";
-            if (type === "Vehicle" && farmour !== "") {
-                armourdisplay = "On";
-            }
-
-            setAttrs({
-                "quality": quality,
-                "name1": name1,
-                "name2": name2,
-                "armourdisplay": armourdisplay
-            }); 
-        });
+        setAttrs({sheetTab:"basic"});
     });
 </script>
