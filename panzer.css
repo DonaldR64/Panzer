@@ -7,7 +7,7 @@
 
 /* show the selected tab */
 .sheet-tabstoggle[value="input"] ~ div.sheet-input,
-.sheet-tabstoggle[value="basic"] ~ div.sheet-advanced,
+.sheet-tabstoggle[value="advanced"] ~ div.sheet-advanced,
 .sheet-tabstoggle[value="basic"] ~ div.sheet-basic {
     display: block;
 }
