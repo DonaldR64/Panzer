@@ -161,9 +161,6 @@ section {
 
 .weapon {
     grid-area: weapon;
-    display: grid;
-    justify-content: center;
-    align-items: center;
     background-color: white;
 }
 
