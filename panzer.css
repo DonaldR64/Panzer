@@ -1,13 +1,11 @@
 /*Configure the tab buttons*/
 .sheet-input,
-.sheet-advanced,
 .sheet-basic {
     display: none;
 }
 
 /* show the selected tab */
 .sheet-tabstoggle[value="input"] ~ div.sheet-input,
-.sheet-tabstoggle[value="advanced"] ~ div.sheet-advanced,
 .sheet-tabstoggle[value="basic"] ~ div.sheet-basic {
     display: block;
 }
