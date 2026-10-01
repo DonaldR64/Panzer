@@ -91,10 +91,14 @@ const Main = (() => {
 
     
 
-
+    //cover - 0 = none, 1 = light, 2 = medium, 3 = heavy
 
     const TerrainInfo = {
 
+
+
+
+        "Scrub": {height: 0, cover: 1, turn: 1, L: 1, T: 2, H: 2, W: 4},
 
     }
 
@@ -652,9 +656,14 @@ const Main = (() => {
             this.building = false;
             this.water = false;
             this.offmap = false;
-
-            this.blockLOS = false;
-            this.moveCost = 1;
+            this.cover = 0;
+            this.turn = 1;
+            this.move = {
+                L: 1,
+                T: 1,
+                H: 1,
+                W: 1,
+            }
             this.road = false;
             this.path = false;
 
@@ -1125,24 +1134,20 @@ const Main = (() => {
                 let label = centre.toCube().label()
                 let hex = HexMap[label];
                 if (hex) {
-                    if (hex.terrain === "Open") {
+
+///hills
+
+                    hex.terrainHeight = Math.max(hex.terrainHeight,terrain.height);
+                    hex.cover = Math.max(hex.cover,terrain.cover);
+                    hex.turn = Math.max(hex.turn,terrain.turn);
+                    hex.move.L = Math.max(hex.move.L,terrain.L);
+                    hex.move.T = Math.max(hex.move.T,terrain.T);
+                    hex.move.H = Math.max(hex.move.H,terrain.H);
+                    hex.move.W = Math.max(hex.move.W,terrain.W);
+                    if (hex.terrain.includes("Open") && name.includes("Hill") === false) {
                         hex.terrain = name;
                     } else {
                         hex.terrain += ", " + name;
-                    }
-                    if (terrain.blockLOS !== false) {
-                        hex.blockLOS = terrain.blockLOS;
-                    }
-                    hex.elevation = terrain.elevation;
-                    hex.terrainHeight = Math.max(terrain.terrainHeight,hex.terrainHeight);
-                    hex.moveCost = Math.max(terrain.moveCost,hex.moveCost);
-                    if (terrain.woods) {
-                        hex.woods = true;
-                    }
-                    //buildings
-                    if (terrain.building === true) {
-                        hex.building = true;
-
                     }
                 }
             }
@@ -1293,6 +1298,12 @@ const Main = (() => {
                 outputCard.body.push("Terrain Height: " + hex.terrainHeight);
             }
             outputCard.body.push("Move Cost: " + hex.moveCost);
+            if (hex.road === true) {
+                outputCard.body.push("There is a Road");
+            }
+            if (hex.path === true) {
+                outputCard.body.push("There is a Path");
+            }
         }
 
 
