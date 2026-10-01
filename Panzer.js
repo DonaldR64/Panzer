@@ -1465,7 +1465,6 @@ log(unit.token)
         RemoveDead();
         RemoveMoveMarkers();
         BuildMap();
-
         //clear arrays
         UnitArray = {};
 
