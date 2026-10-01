@@ -658,7 +658,7 @@ const Main = (() => {
             this.offmap = false;
             this.cover = 0;
             this.turn = 1;
-            this.move = {
+            this.moveCost = {
                 L: 1,
                 T: 1,
                 H: 1,
@@ -696,7 +696,16 @@ const Main = (() => {
             let name = token.get("name");
             this.name = name;
 
-
+            this.type = aa.type;
+            this.nation = aa.nation;
+            this.armourF = parseInt(aa.armourF);
+            this.armourR = parseInt(aa.armourR);
+            this.move = parseInt(aa.move);
+            this.moveType = aa.movetype;
+            this.pathmove = aa.pathmove;
+            this.roadmove = aa.roadmove;
+            this.size = aa.size;
+            this.turret = aa.turret;
 
 
 
@@ -1140,10 +1149,10 @@ const Main = (() => {
                     hex.terrainHeight = Math.max(hex.terrainHeight,terrain.height);
                     hex.cover = Math.max(hex.cover,terrain.cover);
                     hex.turn = Math.max(hex.turn,terrain.turn);
-                    hex.move.L = Math.max(hex.move.L,terrain.L);
-                    hex.move.T = Math.max(hex.move.T,terrain.T);
-                    hex.move.H = Math.max(hex.move.H,terrain.H);
-                    hex.move.W = Math.max(hex.move.W,terrain.W);
+                    hex.moveCost.L = Math.max(hex.moveCost.L,terrain.L);
+                    hex.moveCost.T = Math.max(hex.moveCost.T,terrain.T);
+                    hex.moveCost.H = Math.max(hex.moveCost.H,terrain.H);
+                    hex.moveCost.W = Math.max(hex.moveCost.W,terrain.W);
                     if (hex.terrain.includes("Open") && name.includes("Hill") === false) {
                         hex.terrain = name;
                     } else {
@@ -1297,7 +1306,8 @@ const Main = (() => {
             if (hex.terrainHeight > 0) {
                 outputCard.body.push("Terrain Height: " + hex.terrainHeight);
             }
-            outputCard.body.push("Move Cost: " + hex.moveCost);
+            let mc = hex.moveCost[unit.moveType];
+            outputCard.body.push("Move Cost: " + mc);
             if (hex.road === true) {
                 outputCard.body.push("There is a Road");
             }
