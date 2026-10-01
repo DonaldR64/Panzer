@@ -424,6 +424,12 @@ const Main = (() => {
             let point = cube.toPoint();
             return point;
         }
+        toHexNumber() {
+            let pt1 = this.col.toString().padStart(2,'0');
+            let pt2 = this.row.toString().padStart(2,'0');
+            let thn = pt1 + pt2;
+            return thn;
+        }
     };
 
     const Angle = (theta) => {
@@ -640,6 +646,7 @@ const Main = (() => {
             this.tokenIDs = [];
             this.cube = offset.toCube();
             this.label = offset.label();
+            this.hexNumber = offset.toHexNumber();
             this.elevation = 0;
             this.terrainHeight = 0;
             this.building = false;
@@ -1268,17 +1275,15 @@ const Main = (() => {
             return;
         }
         let unit = UnitArray[msg.selected[0]._id];
-log(unit)
         if (!unit) {
             sendChat("","Not in UnitArray");
             return;
         };
         let hex = HexMap[unit.hexLabel];
         SetupCard(unit.name,"Info",unit.faction);
-log(hex)
-return
 
-        outputCard.body.push("Hex Label: " + label);
+
+        outputCard.body.push("Hex Number: " + hex.hexNumber);
         if (hex.offmap === true) {
             outputCard.body.push("Unit is Off Map");
         } else {
