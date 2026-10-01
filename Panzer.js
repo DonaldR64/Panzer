@@ -1,5 +1,5 @@
 const Main = (() => {
-    const version = '2026.9.21';
+    const version = '2026.10.1';
     if (!state.Panzer) {state.Panzer = {}};
 
     const pageInfo = {};
@@ -29,8 +29,8 @@ const Main = (() => {
         HexInfo = {
             size: HexSize,
             pixelStart: {
-                x: HexSize + pageInfo.offsetX,
-                y: (35 * pageInfo.scale) + pageInfo.offsetY,
+                x: HexSize,
+                y: (35 * pageInfo.scale),
             },
             width: pageInfo.scale*HexSize,
             height: 70  * pageInfo.scale,
@@ -649,6 +649,7 @@ const Main = (() => {
             this.blockLOS = false;
             this.moveCost = 1;
             this.road = false;
+            this.path = false;
 
             HexMap[this.label] = this;
         }
@@ -674,119 +675,14 @@ const Main = (() => {
             let aa = AttributeArray(charID);
   
             this.charName = char.get("name");
-            let name = token.get("name");
-            let mechName = this.charName.split("//")[0].trim();
-            mechName = mechName.split(" ");
-            let variant = mechName[mechName.length -1];
-            mechName.length--;
-            mechName = mechName.toString().replaceAll(","," ");
-            if (!name || name === "") {
-                name = mechName;
-            }
-
-            this.name = name;
-            this.mechName = mechName;
-            this.variant = variant;
-
             this.hexLabel = label;
-
-            this.id = id;
-            this.charID = charID;
-            let faction = aa.faction || "Neutral";
-            this.faction = faction;
-            let player = (state.Panzer.factions.indexOf(faction));
-            if (player === -1) {
-                if (faction === "Neutral") {
-                    player = 2
-                } else {
-                    state.Panzer.factions.push(faction);
-                    player = state.Panzer.factions.length - 1;
-                }
-            }
-            this.player = player;
-            this.token = token;
-            this.type = aa.type;
-            let heights = {BattleMech: 2};
-            this.height = heights[this.type];
-    
-            this.move = parseInt(aa.move);
-            this.moveMax = parseInt(aa.move_max);
-            let moveSpecial = [];
-            if (aa.movespecial && aa.movespecial.includes("j")) {
-                moveSpecial.push("Jump");
-            }
-            this.moveSpecial = moveSpecial;
-            this.jumpMax = aa.jumpmove_max || "";
-            this.jumpMove = "";
-            if (moveSpecial.includes("Jump")) {
-                if (aa.jumpmove) {
-                    this.jumpMove = parseInt(aa.jumpmove)
-                } else {
-                    this.jumpMove = this.moveMax;
-                }
-            }
-
-            this.tmm = parseInt(aa.tmm) || 0;
-            this.tmmMax = parseInt(aa.tmm_max) || 0;
-            this.armour = parseInt(aa.armour) || 0;
-            this.armourMax = parseInt(aa.armour_max) || 0;
-            this.structure = parseInt(aa.structure) || 0;
-            this.structureMax = parseInt(aa.structure_max) || 0;
-
-            let special = [];
-            if (aa.special1) {special.push(aa.special1)};
-            if (aa.special2) {special.push(aa.special2)};
-            if (aa.special3) {special.push(aa.special3)};
-            if (aa.special4) {special.push(aa.special4)};
-            if (aa.special5) {special.push(aa.special5)};
-            if (aa.special6) {special.push(aa.special6)};
-            this.special = special;
+            //this.token = token;
+            let name = token.get("name");
+            this.name = name;
 
 
-            this.skill = parseInt(aa.skill) || 4;
 
-            let weaponArray = [];
-            let unitMaxRange = rangeBands["Short"];
-            for (let w=1;w<4;w++) {
-                let phrase = "weapon" + w;
-                let wEquip = aa[phrase + "equipped"];
-                if (wEquip === "Off") {continue};
-                let wName = aa[phrase + "name"];
-                if (!wName) {continue};
-                let wType = aa[phrase + "type"];
-                let wShort = aa[phrase + "short"];
-                let wMed = aa[phrase + "medium"];
-                let wLong = aa[phrase + "long"];
-                let wShortMax = aa[phrase + "short_max"];
-                let wMedMax = aa[phrase + "medium_max"];
-                let wLongMax = aa[phrase + "long_max"];
-                let wSpecial = aa[phrase + "special"] || " ";
-                wSpecial = wSpecial.split(",").map(e => e.trim());
-                let wMaxRange = rangeBands["Short"];
-                if (wMedMax > 0) {
-                    wMaxRange = rangeBands["Medium"];
-                }
-                if (wLongMax > 0) {
-                     wMaxRange = rangeBands["Long"];
-                }
-                unitMaxRange = Math.max(unitMaxRange,wMaxRange);
-                let info = {
-                    name: wName,
-                    phrase: phrase,
-                    type: wType,
-                    short: wShort,
-                    shortMax: wShortMax,
-                    medium: wMed,
-                    mediumMax: wMedMax,
-                    long: wLong,
-                    longMax: wLongMax,
-                    special: wSpecial,
-                    maxRange: wMaxRange,
-                }
-                weaponArray.push(info);
-            }
-            this.weaponArray = weaponArray;
-            this.maxRange = unitMaxRange;
+
 
             let index = HexMap[label].tokenIDs.indexOf(id);
             if (index < 0) {
@@ -1139,9 +1035,6 @@ const Main = (() => {
         pageInfo.width = pageInfo.page.get("width") * 70;
         pageInfo.height = pageInfo.page.get("height") * 70;
         pageInfo.type = pageInfo.page.get("grid_type");
-        pageInfo.offsetX = pageInfo.page.get("grid_offset_x");
-        pageInfo.offsetY = pageInfo.page.get("grid_offset_y");
-
     }
 
     const BuildMap = () => {
@@ -1150,6 +1043,7 @@ const Main = (() => {
 
         let startX = HexInfo.pixelStart.x;
         let startY = HexInfo.pixelStart.y;
+
         let halfToggleY = HexInfo.halfToggleY;
         for (let i=startX;i<=pageInfo.width;i+=HexInfo.xSpacing) {
             for (let j=startY;j<=pageInfo.height;j+=HexInfo.ySpacing) {
@@ -1159,8 +1053,8 @@ const Main = (() => {
             startY += halfToggleY;
             halfToggleY = -halfToggleY;
         }
-        //AddTerrain();    
-        //AddTokens();
+        AddTerrain();    
+        AddTokens();
         DefineMap();
         let elapsed = Date.now()-startTime;
         log("Hex Map Built in " + elapsed/1000 + " seconds");
@@ -1210,17 +1104,14 @@ const Main = (() => {
 
     const AddTerrain = () => {
         let start = Date.now();
-
-        let waterTokens = [];
-        //Add Token Terrain, Building might be multihex
+        //Add terrain by tokens
         let tokens = findObjs({_pageid: Campaign().get("playerpageid"),_type: "graphic",_subtype: "token",layer: "map",});
-
         _.each(tokens,token => {
             let name = token.get("name") || " ";
             if (name.includes("Map")) {
                 return;
             }
-            name = name.split("//")[0].trim();
+            name = name.trim();
             let terrain = TerrainInfo[name];
             if (terrain) {
                 let centre = new Point(token.get("left"),token.get('top'));
@@ -1246,25 +1137,12 @@ const Main = (() => {
                         hex.building = true;
 
                     }
-                    //water - see below
-                    if (terrain.water === true) {
-                        waterTokens.push(token);
-                    }
                 }
             }
 
         });
 
-        _.each(waterTokens, token => {
-            let name = token.get("name") || " ";
-            name = name.split("//")[0].trim();
-            let terrain = TerrainInfo[name];
-            let centre = new Point(token.get("left"),token.get('top'));
-            let label = centre.toCube().label()
-            let hex = HexMap[label];
-            HexMap[label].elevation -= terrain.terrainHeight;
-            hex.water = true;
-        })
+
 
     
 /*
@@ -1390,14 +1268,15 @@ const Main = (() => {
             return;
         }
         let unit = UnitArray[msg.selected[0]._id];
-log(unit.token)
+log(unit)
         if (!unit) {
             sendChat("","Not in UnitArray");
             return;
         };
-        let label = unit.hexLabel;
-        let hex = HexMap[label];
+        let hex = HexMap[unit.hexLabel];
         SetupCard(unit.name,"Info",unit.faction);
+log(hex)
+return
 
         outputCard.body.push("Hex Label: " + label);
         if (hex.offmap === true) {
@@ -1977,37 +1856,19 @@ log(unit.token)
         let prevLabel = new Point(prev.left,prev.top).toCube().label();
         if (unit && newLabel !== prevLabel) {
             RemoveLines(["LOS"]);
-            if (unit.GetStatus === "Standstill" || unit.token.get(SM.immobile)) {
-                tok.set({
-                    left: prev.left,
-                    top: prev.top,
-                })
-                sendChat("","Unit is not able to move");
-            } else {
-                let newHex = HexMap[newLabel];
-                let prevHex = HexMap[prevLabel];
-                let distance = newHex.distance(prevHex);
-                let elevationChange = Math.abs(newHex.elevation - prevHex.elevation);
-                let jump = (unit.GetStatus() === "Jump" || unit.GetStatus() === "Death from Above") ? true:false;
-                if (jump === true) {elevationChange = 0};
-                if (elevationChange > 2 && distance === 1 && state.Panzer.turn > 0) {
-                    tok.set({
-                        left: prev.left,
-                        top: prev.top,
-                    })
-                    sendChat("","Elevation Change > 2");
-                } else {
-                    log(unit.name + " moving")
-                    let index = HexMap[prevLabel].tokenIDs.indexOf(tok.id);
-                    if (index > -1) {
-                        HexMap[prevLabel].tokenIDs.splice(index,1);
-                        HexMap[newLabel].tokenIDs.push(tok.id);
-                    }
-                    unit.hexLabel = newLabel;
-                    if (state.Panzer.turn > 0) {
-                        aStar(unit,HexMap[newLabel]);
-                    }
-                }
+            let newHex = HexMap[newLabel];
+            let prevHex = HexMap[prevLabel];
+            let distance = newHex.distance(prevHex);
+            let elevationChange = Math.abs(newHex.elevation - prevHex.elevation);
+            log(unit.name + " moving")
+            let index = HexMap[prevLabel].tokenIDs.indexOf(tok.id);
+            if (index > -1) {
+                HexMap[prevLabel].tokenIDs.splice(index,1);
+                HexMap[newLabel].tokenIDs.push(tok.id);
+            }
+            unit.hexLabel = newLabel;
+            if (state.Panzer.turn > 0) {
+                aStar(unit,HexMap[newLabel]);
             }
         } 
         if (unit && tok.get("rotation") !== prev.rotation) {
