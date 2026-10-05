@@ -28,8 +28,8 @@
             </select>
         </div>
         <div class="col">
-            <label>Armour Front:</label><input type="number" name="attr_armourF">
-            <label>Armour Rear:</label><input type="number" name="attr_armourR">
+            <label>FA:</label><input type="text" name="attr_armourF">
+            <label>RA:</label><input type="text" name="attr_armourR">
             <label>CC Move (MP):</label><input type="number" name="attr_move">
             <label for="attr_movetype">Move Type:</label>
             <select name="attr_movetype">
@@ -58,8 +58,12 @@
 
 
     <div class="row">
-        <h3>Weapons</h3>
-        <td><input type="text" name="attr_weaponname"></td>
+        <h3>Weapon 1</h3>
+        <td><input type="text" name="attr_weapon1name"></td>
+        <td><input type="text" name="attr_weapon1stab"></td>
+        <td><input type="text" name="attr_weapon1sight"></td>
+        <td><input type="text" name="attr_weapon1rof"></td>
+        <td><input type="text" name="attr_weapon1ammo"></td>
         <div class="weapons">
             <table>
                 <thead>
@@ -75,23 +79,65 @@
                 <tbody>
                     <tr>
                         <td>Range</td>
-                        <td><input type="number" name="attr_type1rangeP"></td>
-                        <td><input type="number" name="attr_type1rangeS"></td>
-                        <td><input type="number" name="attr_type1rangeM"></td>
-                        <td><input type="number" name="attr_type1rangeL"></td>
-                        <td><input type="number" name="attr_type1rangeE"></td>
+                        <td><input type="number" name="attr_w1rangeP"></td>
+                        <td><input type="number" name="attr_w1rangeS"></td>
+                        <td><input type="number" name="attr_w1rangeM"></td>
+                        <td><input type="number" name="attr_w1rangeL"></td>
+                        <td><input type="number" name="attr_w1rangeE"></td>
                     </tr>
                     <tr>
                         <td>Pen</td>
-                        <td><input type="number" name="attr_type1penP"></td>
-                        <td><input type="number" name="attr_type1penS"></td>
-                        <td><input type="number" name="attr_type1penM"></td>
-                        <td><input type="number" name="attr_type1penL"></td>
-                        <td><input type="number" name="attr_type1penE"></td>
+                        <td><input type="number" name="attr_w1penP"></td>
+                        <td><input type="number" name="attr_w1penS"></td>
+                        <td><input type="number" name="attr_w1penM"></td>
+                        <td><input type="number" name="attr_w1penL"></td>
+                        <td><input type="number" name="attr_w1penE"></td>
                     </tr>
                 </tbody>
             </table>    
-        </div>   
+        </div>
+        <h3>Weapon 2</h3>
+        <td><input type="text" name="attr_weapon2name"></td>
+        <td><input type="text" name="attr_weapon2stab"></td>
+        <td><input type="text" name="attr_weapon2sight"></td>
+        <td><input type="text" name="attr_weapon2rof"></td>
+        <td><input type="text" name="attr_weapon2ammo"></td>
+        <div class="weapons">
+            <table>
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>P</th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>E</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Range</td>
+                        <td><input type="number" name="attr_w2rangeP"></td>
+                        <td><input type="number" name="attr_w2rangeS"></td>
+                        <td><input type="number" name="attr_w2rangeM"></td>
+                        <td><input type="number" name="attr_w2rangeL"></td>
+                        <td><input type="number" name="attr_w2rangeE"></td>
+                    </tr>
+                    <tr>
+                        <td>Pen</td>
+                        <td><input type="number" name="attr_w2penP"></td>
+                        <td><input type="number" name="attr_w2penS"></td>
+                        <td><input type="number" name="attr_w2penM"></td>
+                        <td><input type="number" name="attr_w2penL"></td>
+                        <td><input type="number" name="attr_w2penE"></td>
+                    </tr>
+                </tbody>
+            </table>    
+        </div>  
+        
+
+
+
     </div>
 </div>
 
@@ -126,31 +172,6 @@
                 </section>
 
                 <section class="weapon">    
-                    <h3><span name="attr_weaponname"></span>, <span name="attr_turret"></span></h3>
-                    <div class="topline">
-                        <span> </span>    
-                        <h4>Point Blank</h4>    
-                        <h4>Short</h4>    
-                        <h4>Medium</h4>    
-                        <h4>Long</h4>
-                        <h4>Extreme</h4>
-                    </div>        
-                    <div class="midline">
-                        <h4>Range</h4>    
-                        <span name="attr_type1rangeP"></span>    
-                        <span name="attr_type1rangeS"></span>    
-                        <span name="attr_type1rangeM"></span>    
-                        <span name="attr_type1rangeL"></span>    
-                        <span name="attr_type1rangeE"></span>    
-                    </div>   
-                    <div class="botline">
-                        <h4>Pen</h4>    
-                        <span name="attr_type1penP"></span>    
-                        <span name="attr_type1penS"></span>    
-                        <span name="attr_type1penM"></span>    
-                        <span name="attr_type1penL"></span>    
-                        <span name="attr_type1penE"></span>  
-                    </div>   
 
 
 
